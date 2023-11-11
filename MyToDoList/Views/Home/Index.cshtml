@@ -1,0 +1,129 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<html>
+    <head>
+        <style>
+            body{
+                background-color: #23c08d;
+            }
+            .text-box{
+                background-color: #f4f4f2;
+                border: none;
+                border-radius: 30px ;
+                height: 40px;
+                width: 300px;
+                padding: 20px;
+                margin-right: 10px;
+                box-shadow: 0px 3px 10px gray;
+            }
+            .submit{
+                background-color: #f4f4f2;
+                border: none;
+                border-radius: 30px ;
+                height: 40px;
+                width: 100px;
+                box-shadow: 0px 3px 10px gray;
+                
+            }
+            .box{
+                display: flex;
+               justify-content: center;
+               padding: 50px;
+            }
+            .main-box{
+                width: 450px;
+                min-height: 450px;
+                background-color: #f4f4f2;
+                border-radius: 20px;
+                padding-top: 50px;
+                box-shadow: 0px 3px 9px gray;
+                
+            }
+            .dayOfWeek{
+                text-align: center;
+
+            }
+            .date{
+                text-align: center;
+                font-size: 20px;
+                color: #878786;
+            }     
+            .show-tasks{
+                padding: 20px;
+                
+            }
+            .record{
+                display: flex;
+                flex-content : row;
+                justify-content: baseline;
+                margin-top: 10px;
+                
+            }
+            img{
+                width:20px;
+                height: 20px;
+                flex: 1;
+            }
+            h5{
+                flex: 5;
+                overflow: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="text-center" style="margin-top: 50px">
+            <form method="get">
+                <input type="text" name="task" class="text-box" placeholder="Write your task">
+                <input type="submit" value="Add task" class="submit">
+                
+            </form>
+        </div>
+        <div class="box">
+            <div class="main-box" style="">
+                <div class="date-text">
+                    <h1 class="dayOfWeek">@ViewBag.dayOfWeek</h1>
+                    <h1 class="date">@ViewBag.date</h1>
+                </div>
+                <div class="show-tasks">
+                @if (@ViewBag.tasks.Count == 0)
+                {
+                    <h2 class="text-secondary" style="text-align: center; margin-top: 60px">There is nothing to do</h2>
+                }
+                @for(int i=0; i < ViewBag.tasks.Count; i++)
+                    {
+                        <div class="record">
+                             
+                            @if(ViewBag.tasks[i].status == false)
+                            {
+                                <img src="/img/delete.svg" usemap="#@ViewBag.tasks[i].Id+1">
+                                <map name="@ViewBag.tasks[i].Id+1">
+                                    <area shape="default" href="https://localhost:7046/?delete=@ViewBag.tasks[i].Id">
+                                </map>
+                                <h5 class="text-secondary"><del>@ViewBag.tasks[i].Title</del></h5>
+                                <img src="/img/on.svg" usemap="#@ViewBag.tasks[i].Id">
+                                <map name="@ViewBag.tasks[i].Id">
+                                    <area shape="default" href="https://localhost:7046/?off=@ViewBag.tasks[i].Id">
+                                </map>
+
+                            }else
+                            {
+                                <img src="/img/delete.svg" usemap="#@ViewBag.tasks[i].Id+1">
+                                <map name="@ViewBag.tasks[i].Id+1">
+                                    <area shape="default" href="https://localhost:7046/?delete=@ViewBag.tasks[i].Id">
+                                </map>
+                                <h5>@ViewBag.tasks[i].Title</h5>
+                                <img src="/img/off.svg" usemap="#@ViewBag.tasks[i].Id">
+                                <map name="@ViewBag.tasks[i].Id">
+                                    <area shape="default" href="https://localhost:7046/?on=@ViewBag.tasks[i].Id">
+                                </map>
+                            }
+                        </div>
+                    }
+                    
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
